@@ -56,21 +56,18 @@ def main():
         feed = feeds[0]
         print(f"== {feed['title']} ==\n")
 
-        itens = noticias_do_feed(client, headers, feed["id"], n=4)
+        itens = noticias_do_feed(client, headers, feed["id"], n=6)
 
-
-        
-        # data = datetime.fromtimestamp(item["published"])
-        # link = (item.get("canonical") or item.get("alternate") or [{}])[0].get("href", "")
-        # html = item["summary"]["content"]
-        
-        # for item in noticias_do_feed(client, headers, feed["id"], n=4):
-        #     print(f"{data:%d/%m/%Y %H:%M} - {item['title']}")
-        #     print(f"  {link}\n")
-        #     print(html_para_texto(html))
-        #     print("\n" + ("-" * 60) + "\n")
-
-        print(itens)
+        noticias = [
+        {
+            "titulo": item["title"],
+            "data": datetime.fromtimestamp(item["published"]),
+            "link": (item.get("canonical") or item.get("alternate") or [{}])[0].get("href", ""),
+            "texto": html_para_texto(item.get("summary", {}).get("content", "")),
+        }
+        for item in itens
+]
+        return noticias
 
 
 if __name__ == "__main__":
