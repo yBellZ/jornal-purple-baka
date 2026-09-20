@@ -1,0 +1,23 @@
+[project]
+name = "freshrss"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Bell", email = "guizadinho2@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "bs4>=0.0.2",
+    "dotenv>=0.9.9",
+    "h2>=4.4.1",
+    "httpx[http2]>=0.28.1",
+    "trafilatura>=2.2.0",
+]
+
+[project.scripts]
+freshrss = "freshrss:main"
+
+[build-system]
+requires = ["uv_build>=0.12.8,<0.13.0"]
+build-backend = "uv_build"
