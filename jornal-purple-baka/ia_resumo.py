@@ -31,10 +31,10 @@ Um gato invadiu a sessão da Câmara de Vereadores de uma cidade do interior, su
 Resumo:
 Um gato invadiu a sessão da Câmara, subiu na mesa e tirou uma soneca em cima da pauta. Resultado: sessão suspensa por dez minutos até um assessor convencer o vereador de quatro patas a sair."""
 
-def ia_resumo(feedrss: str) -> str:
+def ia_resumo(title, feedrss: str) -> str:
     completion = client.chat.completions.create(
         model="unsloth/Qwen3.5-0.8B-GGUF:Q4_K_XL",
-        max_tokens=512,
+        max_tokens=8192,
         temperature=0.7,
         top_p=0.8,
         presence_penalty=1.5,
@@ -45,10 +45,12 @@ def ia_resumo(feedrss: str) -> str:
         },
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": feedrss},
+            {"role": "user", "content": f"Título: {title}\nTexto: {feedrss}"},
         ],
     )
+
     choice = completion.choices[0]
     if choice.finish_reason == "length":
         print("aviso: resposta cortada por max_tokens")
+
     return (choice.message.content or "").strip()

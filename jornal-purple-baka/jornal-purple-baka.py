@@ -3,10 +3,10 @@ from ia_resumo import ia_resumo
 from mandar_discord import rodar_tudo
 
 def main():
-    feed = feedrss()
-    resumo = ia_resumo(feed[0]["texto"])
+    feed, periodo = feedrss()
+    resumo = ia_resumo(feed[0]["title"], feed[0]["texto"])
 
-    rodar_tudo(feed, resumo)
+    rodar_tudo(feed, resumo, periodo)
 
     print(feed[0]["texto"])
     print(f"\n{"-" * 60}\n")
