@@ -12,6 +12,7 @@ dependencies = [
     "dotenv>=0.9.9",
     "h2>=4.4.1",
     "httpx[http2]>=0.28.1",
+    "openai>=3.16.2",
     "trafilatura>=2.2.0",
 ]
 

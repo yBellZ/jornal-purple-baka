@@ -47,7 +47,7 @@ def noticias_do_feed(client, headers, feed_id, n=10, so_nao_lidas=False):
 def html_para_texto(html):
     return BeautifulSoup(html, "html.parser").get_text(" ", strip=True)
 
-def main():
+def feedrss():
     with httpx.Client(timeout=15, follow_redirects=True) as client:
         headers = login(client)
         feeds = listar_feeds(client, headers)
@@ -59,16 +59,14 @@ def main():
         itens = noticias_do_feed(client, headers, feed["id"], n=6)
 
         noticias = [
-        {
-            "titulo": item["title"],
-            "data": datetime.fromtimestamp(item["published"]),
-            "link": (item.get("canonical") or item.get("alternate") or [{}])[0].get("href", ""),
-            "texto": html_para_texto(item.get("summary", {}).get("content", "")),
-        }
-        for item in itens
-]
+            {
+                "titulo": item["title"],
+                "data": datetime.fromtimestamp(item["published"]),
+                "link": (item.get("canonical") or item.get("alternate") or [{}])[0].get("href", ""),
+                "texto": html_para_texto(item.get("summary", {}).get("content", "")),
+            }
+            
+            for item in itens
+        ]
+
         return noticias
-
-
-if __name__ == "__main__":
-    main()
