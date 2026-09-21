@@ -52,18 +52,3 @@ def ia_resumo(feedrss: str) -> str:
     if choice.finish_reason == "length":
         print("aviso: resposta cortada por max_tokens")
     return (choice.message.content or "").strip()
-    
-    # completion = client.chat.completions.create(
-        # model="unsloth/Qwen3.5-0.8B-GGUF:Q4_K_XL",
-        # messages=messages,
-        # max_tokens=65536,
-        # temperature=0.7,
-        # top_p=0.8,
-        # presence_penalty=1.5,
-        # extra_body={
-        #     "top_k": 20,
-        #     "min_p": 0.0,
-        # },
-    # )
-
-    return

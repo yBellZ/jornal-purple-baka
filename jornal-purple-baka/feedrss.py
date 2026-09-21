@@ -54,7 +54,6 @@ def feedrss():
 
         # Exemplo: notícias do primeiro feed da lista
         feed = feeds[0]
-        print(f"== {feed['title']} ==\n")
 
         itens = noticias_do_feed(client, headers, feed["id"], n=6)
 
