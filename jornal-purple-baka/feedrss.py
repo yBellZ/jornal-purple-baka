@@ -62,13 +62,25 @@ def primeira_imagem(html, base_url=""):
 def html_para_texto(html):
     return BeautifulSoup(html, "html.parser").get_text(" ", strip=True)
 
+def feeds_da_categoria(feeds, nome_categoria):
+    return [
+        f for f in feeds
+        if any(c["label"] == nome_categoria for c in f.get("categories", []))
+    ]
+
 def pegar_feed(feeds):
     tempo = datetime.now().hour
 
     if 0 <= tempo <= 17:
-        return random.choice(feeds[0:1]), "MANHÃ"
-    elif 18 <= tempo <= 23:
-        return random.choice(feeds[2:5]), "TARDE"
+        label = "Manhã"
+    else:
+        label = "Tarde"
+
+    noticias = feeds_da_categoria(feeds, label)
+    if not noticias:
+        raise SystemExit(f"Nenhum feed na categoria '{label}'")
+
+    return random.choice(noticias), label.upper()
 
 def feedrss():
     with httpx.Client(timeout=15, follow_redirects=True) as client:
