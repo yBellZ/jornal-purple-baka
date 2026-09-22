@@ -1,6 +1,13 @@
+from dotenv import load_dotenv
+import os
 import openai
 
-client = openai.OpenAI(base_url="http://localhost:1917/v1", api_key="no-key-required")
+load_dotenv()
+
+LLAMA_URL = os.environ["LLAMA_URL"]
+print(f"OLLAMA URL: {LLAMA_URL}")
+
+client = openai.OpenAI(base_url=LLAMA_URL, api_key="no-key-required")
 
 SYSTEM_PROMPT = """Você resume notícias em português do Brasil, com um texto vivo e envolvente.
 
