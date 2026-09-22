@@ -11,6 +11,10 @@ def montar_payload(feed, resumo, periodo):
         "flags": 32768,
         "components": [
             {
+                "type": 10,
+                "content": "<@&1543205725780574360>"
+            },
+            {
                 "type": 17,
                 "components": [
                     {
