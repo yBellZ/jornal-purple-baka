@@ -5,7 +5,7 @@ import openai
 load_dotenv()
 
 LLAMA_URL = os.environ["LLAMA_URL"]
-print(f"OLLAMA URL: {LLAMA_URL}")
+print(f"LLAMA URL: {LLAMA_URL}")
 
 client = openai.OpenAI(base_url=LLAMA_URL, api_key="no-key-required")
 
