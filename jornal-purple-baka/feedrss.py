@@ -1,4 +1,3 @@
-from datetime import time
 from datetime import datetime
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
@@ -10,7 +9,7 @@ import random
 load_dotenv()
 
 BASE = os.environ["BASE"].rstrip("/")
-USER = os.environ["USER"]
+USER = os.environ["FRESHRSS_USER"]
 API_PASSWORD = os.environ["API_PASSWORD"]
 
 
@@ -67,9 +66,9 @@ def pegar_feed(feeds):
     tempo = datetime.now().hour
 
     if 0 <= tempo <= 17:
-        return random.choice([feeds[0], feeds[1]]), "MANHÃ"
+        return random.choice(feeds[0:1]), "MANHÃ"
     elif 18 <= tempo <= 23:
-        return random.choice(feeds[2], feeds[3], feeds[4], feeds[5]), "TARDE"
+        return random.choice(feeds[2:5]), "TARDE"
 
 def feedrss():
     with httpx.Client(timeout=15, follow_redirects=True) as client:
@@ -80,9 +79,8 @@ def feedrss():
 
         a = 0
         for i in feeds:
-            print(a)
+            print(f"ID: {a} JSON: {i}")
             a += 1
-            print(i)
 
         itens = noticias_do_feed(client, headers, feed["id"], n=6)
 
