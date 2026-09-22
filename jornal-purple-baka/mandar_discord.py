@@ -68,7 +68,11 @@ def montar_payload(feed, resumo, periodo):
                 ],
                 "accent_color": 8135871
             }
-        ]
+        ],
+        "allowed_mentions": {
+            "parse": [],
+            "roles": ["1543205725780574360"]
+        }
     }
 
 def enviar_content_discord(client: httpx.Client, feed, resumo, periodo):
