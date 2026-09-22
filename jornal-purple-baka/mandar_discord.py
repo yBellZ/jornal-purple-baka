@@ -37,7 +37,7 @@ def montar_payload(feed, resumo, periodo):
                 },
                 {
                 "type": 10,
-                "content": f"### `📰` **MAIS NOTÍCIAS:**\n> * [**{feed[1]['title']}**]({feed[1]['link']})\n> * [**{feed[2]['title']}**]({feed[2]['link']})\n> * [**{feed[3]['title']}**]({feed[3]['link']})\n> * [**{feed[4]['title']}**]({feed[4]['link']})\n> * [**{feed[5]['title']}**]({feed[5]['link']})"
+                "content": f"### `📰` **MAIS NOTÍCIAS:**\n> * [**{feed[1]['title']}**]({feed[1]['link']})\n> * [**{feed[2]['title']}**]({feed[2]['link']})\n> * [**{feed[3]['title']}**]({feed[3]['link']})\n> * [**{feed[4]['title']}**]({feed[4]['link']})\n> * [**{feed[5]['title']}**]({feed[5]['link']}\n-# [Github](https://github.com/yBellZ/jornal-purple-baka))"
                 }
             ],
             "accent_color": 8135871
