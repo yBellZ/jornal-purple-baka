@@ -11,38 +11,60 @@ def montar_payload(feed, resumo, periodo):
         "flags": 32768,
         "components": [
             {
-            "type": 17,
-            "components": [
-                {
-                "type": 10,
-                "content": f"## <:B_Baka:1539255932977025084> JORNAL DA {periodo}\n\n[**{feed[0]['title']}**]({feed[0]['link']})\n> {resumo}"
-                },
-                {
-                "type": 14,
-                "divider": False
-                },
-                {
-                "type": 12,
-                "items": [
+                "type": 17,
+                "components": [
                     {
-                    "media": {
-                        "url": feed[0]['imagem']
+                        "type": 10,
+                        "content": (
+                            f"## <:B_Baka:1539255932977025084> JORNAL DA {periodo}\n\n"
+                            f"[**{feed[0]['title']}**]({feed[0]['link']})\n"
+                            f"> {resumo}"
+                        )
+                    },
+                    {
+                        "type": 14,
+                        "divider": False
+                    },
+                    {
+                        "type": 12,
+                        "items": [
+                            {
+                                "media": {
+                                    "url": feed[0]['imagem']
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": 14,
+                        "spacing": 2
+                    },
+                    {
+                        "type": 10,
+                        "content": (
+                            "### `📰` **MAIS NOTÍCIAS:**\n"
+                            f"> * [**{feed[1]['title']}**]({feed[1]['link']})\n"
+                            f"> * [**{feed[2]['title']}**]({feed[2]['link']})\n"
+                            f"> * [**{feed[3]['title']}**]({feed[3]['link']})\n"
+                            f"> * [**{feed[4]['title']}**]({feed[4]['link']})\n"
+                            f"> * [**{feed[5]['title']}**]({feed[5]['link']})"
+                        )
+                    },
+                    {
+                        "type": 1,
+                        "components": [
+                            {
+                                "type": 2,
+                                "style": 5,
+                                "label": "Github do jornal",
+                                "url": "https://github.com/yBellZ/jornal-purple-baka"
+                            }
+                        ]
                     }
-                    }
-                ]
-                },
-                {
-                "type": 14,
-                "spacing": 2,
-                },
-                {
-                "type": 10,
-                "content": f"### `📰` **MAIS NOTÍCIAS:**\n> * [**{feed[1]['title']}**]({feed[1]['link']})\n> * [**{feed[2]['title']}**]({feed[2]['link']})\n> * [**{feed[3]['title']}**]({feed[3]['link']})\n> * [**{feed[4]['title']}**]({feed[4]['link']})\n> * [**{feed[5]['title']}**]({feed[5]['link']})\n\n-# [Github do bot](https://github.com/yBellZ/jornal-purple-baka)"
-                }
-            ],
-            "accent_color": 8135871
+                ],
+                "accent_color": 8135871
             }
-        ],
+        ]
     }
 
 def enviar_content_discord(client: httpx.Client, feed, resumo, periodo):
