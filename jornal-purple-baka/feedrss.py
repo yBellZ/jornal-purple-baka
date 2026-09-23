@@ -76,28 +76,36 @@ def pegar_feed(feeds):
     else:
         label = "Tarde"
 
+    # só pra teste isso em baixo
+
+    # if 0 <= tempo <= 17:
+    #     label = "Tarde"
+    # else:
+    #     label = "Manhã"
+
     noticias = feeds_da_categoria(feeds, label)
     if not noticias:
         raise SystemExit(f"Nenhum feed na categoria '{label}'")
 
-    return random.choice(noticias), label.upper()
+    return noticias, label.upper()
 
-def feedrss():
-    with httpx.Client(timeout=15, follow_redirects=True) as client:
-        headers = login(client)
-        feeds = listar_feeds(client, headers)
+def noticia_aleatoria_cada_feed(client, headers, feeds, quantidade=6, n_busca=10, so_nao_lidas=False):
+    estoques = []
+    for feed in feeds:
+        itens = noticias_do_feed(client, headers, feed["id"], n=n_busca, so_nao_lidas=so_nao_lidas)
+        if itens:
+            random.shuffle(itens)
+            estoques.append({"feed": feed, "itens": itens})
 
-        feed, periodo = pegar_feed(feeds)
+    resultado = []
+    i = 0
+    while len(resultado) < quantidade and estoques:
+        estoque = estoques[i % len(estoques)]
 
-        a = 0
-        for i in feeds:
-            print(f"ID: {a} JSON: {i}")
-            a += 1
-
-        itens = noticias_do_feed(client, headers, feed["id"], n=6)
-
-        noticias = [
-            {
+        if estoque["itens"]:
+            item = estoque["itens"].pop()
+            resultado.append({
+                "feed": estoque["feed"]["title"],
                 "title": item["title"],
                 "data": datetime.fromtimestamp(item["published"]),
                 "link": (item.get("canonical") or item.get("alternate") or [{}])[0].get("href", ""),
@@ -106,9 +114,22 @@ def feedrss():
                     item.get("summary", {}).get("content", ""),
                     base_url=(item.get("canonical") or item.get("alternate") or [{}])[0].get("href", ""),
                 ),
-            }
-            
-            for item in itens
-        ]
+            })
+            i += 1
+        else:
+            estoques.pop(i % len(estoques))
+            if not estoques:
+                break
+
+    return resultado
+
+def feedrss():
+    with httpx.Client(timeout=15, follow_redirects=True) as client:
+        headers = login(client)
+        feeds = listar_feeds(client, headers)
+
+        feeds_periodo, periodo = pegar_feed(feeds)
+
+        noticias = noticia_aleatoria_cada_feed(client, headers, feeds_periodo, quantidade=6)
 
         return noticias, periodo
